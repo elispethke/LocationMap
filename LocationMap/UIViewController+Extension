@@ -1,0 +1,45 @@
+//
+//  ViewController.swift
+//  LocationMap
+//
+//  Created by Elisangela Pethke on 04.07.24.
+//
+import UIKit
+
+
+struct LogoutManager {
+    
+    static func logout(from viewController: UIViewController, completion: @escaping (Bool, Error?) -> Void) {
+        APITheMapClient.logout { success, error in
+            if success {
+                print("Successfully logged out")
+            } else {
+                print("Logout failed: \(error?.localizedDescription ?? "Unknown error")")
+            }
+            DispatchQueue.main.async {
+                completion(success, error)
+                if success {
+                    viewController.dismiss(animated: true, completion: nil)
+                } else {
+                    viewController.showLogoutErrorAlert(message: error?.localizedDescription ?? "Unknown error")
+                }
+            }
+        }
+    }
+}
+
+
+extension UIViewController {
+    
+    @IBAction func logoutTapped(_ sender: UIBarButtonItem) {
+        LogoutManager.logout(from: self) { success, error in
+            
+        }
+    }
+    
+    func showLogoutErrorAlert(message: String) {
+        let alertVC = UIAlertController(title: "Logout Failed", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+}
