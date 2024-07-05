@@ -14,7 +14,7 @@ class PositionViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    private var locations = [StudentLocation]() {
+    private var locations = [LearnerLocation]() {
         didSet {
             updateMapAnnotations()
         }
@@ -22,16 +22,16 @@ class PositionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchStudentLocations()
+        fetchLearnerLocations()
     }
     
-    @IBAction func refreshData(_ sender: Any) {
-        fetchStudentLocations()
+    @IBAction func reloadContent(_ sender: Any) {
+        fetchLearnerLocations()
     }
     
-    private func fetchStudentLocations() {
-        refreshUI(true)
-        APITheMapClient.getStudentLocations { [weak self] locations, error in
+    private func fetchLearnerLocations() {
+        updateUIAfter(true)
+        TheMapAPIClient.retrieveLearnerLocations { [weak self] locations, error in
             guard let self = self else { return }
             
             if let error = error {
@@ -40,9 +40,10 @@ class PositionViewController: UIViewController {
                 self.locations = locations
             }
             
-            self.refreshUI(false)
+            self.updateUIAfter(false)
         }
     }
+    
     
     private func updateMapAnnotations() {
         mapView.removeAnnotations(mapView.annotations)
@@ -50,17 +51,17 @@ class PositionViewController: UIViewController {
         var annotations = [MKPointAnnotation]()
         
         for location in locations {
-            let lat = location.latitude
-            let long = location.longitude
+            let lat = location.lat
+            let long = location.long
             
             
-            guard lat != nil && long != nil else {
+            guard lat != 0.0 && long != 0.0 else {
                 continue
             }
             
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            let title = "\(location.firstName ?? "") \(location.lastName ?? "")"
-            let subtitle = location.mediaURL ?? ""
+            let title = "\(location.giventName ?? "") \(location.familyName ?? "")"
+            let subtitle = location.urlMedia ?? ""
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
@@ -73,7 +74,7 @@ class PositionViewController: UIViewController {
         mapView.addAnnotations(annotations)
     }
     
-    private func refreshUI(_ refreshing: Bool) {
+    private func updateUIAfter(_ refreshing: Bool) {
         if refreshing {
             activityIndicator.startAnimating()
         } else {

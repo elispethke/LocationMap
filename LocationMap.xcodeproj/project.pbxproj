@@ -22,15 +22,15 @@
 		C2CBE03C2C3744F100658473 /* LogintextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE03B2C3744F100658473 /* LogintextField.swift */; };
 		C2CBE03E2C3745F900658473 /* SignInResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE03D2C3745F900658473 /* SignInResponse.swift */; };
 		C2CBE0402C37468D00658473 /* LocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE03F2C37468D00658473 /* LocationResponse.swift */; };
-		C2CBE0422C37471200658473 /* StudentLocationsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0412C37471200658473 /* StudentLocationsResponse.swift */; };
 		C2CBE0442C3747E500658473 /* UserAccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0432C3747E500658473 /* UserAccountResponse.swift */; };
-		C2CBE0462C37481400658473 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0452C37481400658473 /* ErrorResponse.swift */; };
-		C2CBE0482C37483700658473 /* StudentPostLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0472C37483700658473 /* StudentPostLocationResponse.swift */; };
 		C2CBE04A2C37485F00658473 /* SignInRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0492C37485F00658473 /* SignInRequest.swift */; };
 		C2CBE04C2C3748BF00658473 /* PlaceStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE04B2C3748BE00658473 /* PlaceStudentRequest.swift */; };
 		C2CBE04E2C37490700658473 /* ApIStudentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE04D2C37490700658473 /* ApIStudentInfo.swift */; };
 		C2CBE0502C37492D00658473 /* APITheMapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE04F2C37492D00658473 /* APITheMapClient.swift */; };
 		C2CBE0522C37497600658473 /* StudentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0512C37497600658473 /* StudentModel.swift */; };
+		C2CBE0542C38526100658473 /* APIErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0532C38526100658473 /* APIErrorResponse.swift */; };
+		C2CBE0562C385F8000658473 /* LearnerLocationsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0552C385F8000658473 /* LearnerLocationsResponse.swift */; };
+		C2CBE0582C385FD800658473 /* PostLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0572C385FD800658473 /* PostLocationResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,15 +51,15 @@
 		C2CBE03B2C3744F100658473 /* LogintextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogintextField.swift; sourceTree = "<group>"; };
 		C2CBE03D2C3745F900658473 /* SignInResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponse.swift; sourceTree = "<group>"; };
 		C2CBE03F2C37468D00658473 /* LocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationResponse.swift; sourceTree = "<group>"; };
-		C2CBE0412C37471200658473 /* StudentLocationsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocationsResponse.swift; sourceTree = "<group>"; };
 		C2CBE0432C3747E500658473 /* UserAccountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountResponse.swift; sourceTree = "<group>"; };
-		C2CBE0452C37481400658473 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
-		C2CBE0472C37483700658473 /* StudentPostLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentPostLocationResponse.swift; sourceTree = "<group>"; };
 		C2CBE0492C37485F00658473 /* SignInRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInRequest.swift; sourceTree = "<group>"; };
 		C2CBE04B2C3748BE00658473 /* PlaceStudentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceStudentRequest.swift; sourceTree = "<group>"; };
 		C2CBE04D2C37490700658473 /* ApIStudentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApIStudentInfo.swift; sourceTree = "<group>"; };
 		C2CBE04F2C37492D00658473 /* APITheMapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITheMapClient.swift; sourceTree = "<group>"; };
 		C2CBE0512C37497600658473 /* StudentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentModel.swift; sourceTree = "<group>"; };
+		C2CBE0532C38526100658473 /* APIErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorResponse.swift; sourceTree = "<group>"; };
+		C2CBE0552C385F8000658473 /* LearnerLocationsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnerLocationsResponse.swift; sourceTree = "<group>"; };
+		C2CBE0572C385FD800658473 /* PostLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +92,6 @@
 		C2CBE00D2C371AFE00658473 /* LocationMap */ = {
 			isa = PBXGroup;
 			children = (
-				C2CBE02A2C373E8800658473 /* Views */,
 				C2CBE0292C373E7A00658473 /* Body */,
 				C2CBE0282C373E2E00658473 /* Response */,
 				C2CBE0272C373E2600658473 /* Request */,
@@ -140,10 +139,11 @@
 			children = (
 				C2CBE03D2C3745F900658473 /* SignInResponse.swift */,
 				C2CBE03F2C37468D00658473 /* LocationResponse.swift */,
-				C2CBE0412C37471200658473 /* StudentLocationsResponse.swift */,
+				C2CBE0572C385FD800658473 /* PostLocationResponse.swift */,
+				C2CBE0532C38526100658473 /* APIErrorResponse.swift */,
 				C2CBE0432C3747E500658473 /* UserAccountResponse.swift */,
-				C2CBE0452C37481400658473 /* ErrorResponse.swift */,
-				C2CBE0472C37483700658473 /* StudentPostLocationResponse.swift */,
+				C2CBE0552C385F8000658473 /* LearnerLocationsResponse.swift */,
+				C2CBE02A2C373E8800658473 /* Views */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -166,7 +166,8 @@
 				C2CBE0332C37429500658473 /* LocationEntryViewController.swift */,
 				C2CBE0352C37433800658473 /* NewLocationViewController.swift */,
 			);
-			path = Views;
+			name = Views;
+			path = ../Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,24 +244,24 @@
 				C2CBE04E2C37490700658473 /* ApIStudentInfo.swift in Sources */,
 				C2CBE0342C37429500658473 /* LocationEntryViewController.swift in Sources */,
 				C2CBE0402C37468D00658473 /* LocationResponse.swift in Sources */,
-				C2CBE0422C37471200658473 /* StudentLocationsResponse.swift in Sources */,
 				C2CBE0322C3741EA00658473 /* PositionTableViewController.swift in Sources */,
 				C2CBE02C2C373EED00658473 /* SignInViewController.swift in Sources */,
 				C2CBE0442C3747E500658473 /* UserAccountResponse.swift in Sources */,
 				C2CBE0502C37492D00658473 /* APITheMapClient.swift in Sources */,
 				C2CBE04A2C37485F00658473 /* SignInRequest.swift in Sources */,
-				C2CBE0482C37483700658473 /* StudentPostLocationResponse.swift in Sources */,
-				C2CBE0462C37481400658473 /* ErrorResponse.swift in Sources */,
 				C2CBE0132C371AFE00658473 /* UIViewController+Extension in Sources */,
+				C2CBE0562C385F8000658473 /* LearnerLocationsResponse.swift in Sources */,
 				C2CBE03A2C3744C400658473 /* LoginButton.swift in Sources */,
 				C2CBE03E2C3745F900658473 /* SignInResponse.swift in Sources */,
 				C2CBE0522C37497600658473 /* StudentModel.swift in Sources */,
 				C2CBE03C2C3744F100658473 /* LogintextField.swift in Sources */,
+				C2CBE0582C385FD800658473 /* PostLocationResponse.swift in Sources */,
 				C2CBE04C2C3748BF00658473 /* PlaceStudentRequest.swift in Sources */,
 				C2CBE0362C37433800658473 /* NewLocationViewController.swift in Sources */,
 				C2CBE02E2C37402200658473 /* PositionViewController.swift in Sources */,
 				C2CBE00F2C371AFE00658473 /* AppDelegate.swift in Sources */,
 				C2CBE0112C371AFE00658473 /* SceneDelegate.swift in Sources */,
+				C2CBE0542C38526100658473 /* APIErrorResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

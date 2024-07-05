@@ -7,43 +7,43 @@
 
 import Foundation
 
-class APITheMapClient {
+class TheMapAPIClient {
     
     enum Endpoints {
-        static let base = "https://onthemap-api.udacity.com/v1/"
+        static let baseURL = "https://onthemap-api.udacity.com/v1/"
         static let session = "session"
-        static let studentLocation = "StudentLocation"
+        static let learnerLocation = "LearnerLocation"
         
-        case createSession
-        case signUp
-        case logout
-        case getStudentLocations
-        case getUserData
-        case postStudentLocation
+        case initiateSession
+        case register
+        case endSession
+        case fetchLearnerLocations
+        case retrieveUserData
+        case submitLearnerLocation
         
-        var stringValue: String {
+        var urlString: String {
             switch self {
-            case .createSession:
-                return Endpoints.base + Endpoints.session
-            case .signUp:
+            case .initiateSession:
+                return Endpoints.baseURL + Endpoints.session
+            case .register:
                 return "https://auth.udacity.com/sign-up"
-            case .logout:
-                return Endpoints.base + Endpoints.session
-            case .getStudentLocations:
-                return Endpoints.base + Endpoints.studentLocation + "?limit=100&order=-updatedAt"
-            case .getUserData:
-                return Endpoints.base + "users/" + Auth.objectId
-            case .postStudentLocation:
-                return Endpoints.base + Endpoints.studentLocation
+            case .endSession:
+                return Endpoints.baseURL + Endpoints.session
+            case .fetchLearnerLocations:
+                return Endpoints.baseURL + Endpoints.learnerLocation + "?limit=100&order=-updatedAt"
+            case .retrieveUserData:
+                return Endpoints.baseURL + "users/" + UserSession.customIdentifier
+            case .submitLearnerLocation:
+                return Endpoints.baseURL + Endpoints.learnerLocation
             }
         }
         
         var url: URL {
-            return URL(string: stringValue)!
+            return URL(string: urlString)!
         }
     }
     
-    class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping (ResponseType?, Error?) -> Void) {
+    class func performGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping (ResponseType?, Error?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else {
                 DispatchQueue.main.async {
@@ -54,9 +54,9 @@ class APITheMapClient {
             
             let decoder = JSONDecoder()
             do {
-                let responseObject = try decoder.decode(ResponseType.self, from: data)
+                let decodedResponse = try decoder.decode(ResponseType.self, from: data)
                 DispatchQueue.main.async {
-                    completion(responseObject, nil)
+                    completion(decodedResponse, nil)
                 }
             } catch {
                 DispatchQueue.main.async {
@@ -67,11 +67,11 @@ class APITheMapClient {
         task.resume()
     }
     
-    class func taskForPOSTRequest<RequestType: Encodable, ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, body: RequestType, completion: @escaping (ResponseType?, Error?) -> Void) {
+    class func performPOSTRequest<RequestType: Encodable, ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, requestBody: RequestType, completion: @escaping (ResponseType?, Error?) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONEncoder().encode(body)
+        request.httpBody = try? JSONEncoder().encode(requestBody)
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
@@ -83,9 +83,9 @@ class APITheMapClient {
             
             let decoder = JSONDecoder()
             do {
-                let responseObject = try decoder.decode(ResponseType.self, from: data)
+                let decodedResponse = try decoder.decode(ResponseType.self, from: data)
                 DispatchQueue.main.async {
-                    completion(responseObject, nil)
+                    completion(decodedResponse, nil)
                 }
             } catch {
                 DispatchQueue.main.async {
@@ -96,8 +96,9 @@ class APITheMapClient {
         task.resume()
     }
     
-    class func getStudentLocations(completion: @escaping ([StudentLocation], Error?) -> Void) {
-        taskForGETRequest(url: Endpoints.getStudentLocations.url, responseType: StudentLocationsResponse.self) { (response: StudentLocationsResponse?, error: Error?) in
+  
+    class func retrieveLearnerLocations(completion: @escaping ([LearnerLocation], Error?) -> Void) {
+        performGETRequest(url: Endpoints.fetchLearnerLocations.url, responseType: LearnerLocationsResponse.self) { (response, error) in
             if let response = response {
                 completion(response.results, nil)
             } else {
@@ -105,13 +106,15 @@ class APITheMapClient {
             }
         }
     }
-    
-    class func createSessionId(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
-        let body = SignInRequest(udacity: ["username": username, "password": password])
-        taskForPOSTRequest(url: Endpoints.createSession.url, responseType: SignInResponse.self, body: body) { response, error in
+
+
+    // Session creation function
+    class func createSession(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
+        let requestBody = SignInRequest(udacity: ["username": username, "password": password])
+        performPOSTRequest(url: Endpoints.initiateSession.url, responseType: SignInResponse.self, requestBody: requestBody) { response, error in
             if let response = response {
-                Auth.sessionId = response.session.id
-                Auth.objectId = response.account.key
+                UserSession.sessionId = response.session.id
+                UserSession.customIdentifier = response.account.key
                 completion(true, nil)
             } else {
                 completion(false, error)
@@ -119,8 +122,9 @@ class APITheMapClient {
         }
     }
     
-    class func logout(completion: @escaping (Bool, Error?) -> Void) {
-        var request = URLRequest(url: Endpoints.logout.url)
+    // Logout function
+    class func endSession(completion: @escaping (Bool, Error?) -> Void) {
+        var request = URLRequest(url: Endpoints.endSession.url)
         request.httpMethod = "DELETE"
         
         var xsrfCookie: HTTPCookie? = nil
@@ -142,19 +146,20 @@ class APITheMapClient {
                 return
             }
             
-            Auth.sessionId = ""
-            Auth.objectId = ""
+            UserSession.sessionId = ""
+            UserSession.customIdentifier = ""
             completion(true, nil)
         }
         task.resume()
     }
     
-    class func getUserData(completion: @escaping (Bool, Error?) -> Void) {
-        taskForGETRequest(url: Endpoints.getUserData.url, responseType: UserAccountResponse.self) { response, error in
+    // Function to obtain user data
+    class func fetchUserData(completion: @escaping (Bool, Error?) -> Void) {
+        performGETRequest(url: Endpoints.retrieveUserData.url, responseType: UserAccountResponse.self) { response, error in
             if let response = response {
-                Auth.firstName = response.firstName ?? ""
-                Auth.lastName = response.lastName ?? ""
-                Auth.objectId = response.userId ?? ""
+                UserSession.givenName = response.givenName ?? ""
+                UserSession.familyName = response.familyName ?? ""
+                UserSession.customIdentifier = response.userId ?? ""
                 
                 completion(true, nil)
             } else {
@@ -162,18 +167,19 @@ class APITheMapClient {
             }
         }
     }
-
-    class func postStudentLocation(mapString: String, mediaURL: String, latitude: Double, longitude: Double, completion: @escaping (Bool, Error?) -> Void) {
-        let body = PlaceStudentRequest(
-            uniqueKey: Auth.objectId,
-            firstName: Auth.firstName,
-            lastName: Auth.lastName,
-            mapString: mapString,
-            mediaURL: mediaURL,
-            latitude: latitude,
-            longitude: longitude
+    
+    //  Function to post the student's location
+    class func submitLearnerLocation(locationString: String, urlMedia: String, lat: Double, lon: Double, completion: @escaping (Bool, Error?) -> Void) {
+        let requestBody = PlaceStudentRequest(
+            uniqueIdentifier: UserSession.customIdentifier,
+            givenName: UserSession.givenName,
+            familyName: UserSession.familyName,
+            locationString: locationString,
+            urlMedia: urlMedia,
+            lat: lat,
+            lon: lon
         )
-        taskForPOSTRequest(url: Endpoints.postStudentLocation.url, responseType: PostLocationResponse.self, body: body) { response, error in
+        performPOSTRequest(url: Endpoints.submitLearnerLocation.url, responseType: PostLocationResponse.self, requestBody: requestBody) { response, error in
             if let _ = response {
                 completion(true, nil)
             } else {

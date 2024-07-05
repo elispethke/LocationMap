@@ -109,8 +109,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="emailTextField" destination="vN1-pr-qvV" id="Z8K-Ck-Q5y"/>
                         <outlet property="passwordTextField" destination="xNt-Rs-pvx" id="NyP-vs-qOP"/>
-                        <outlet property="usernameTextField" destination="vN1-pr-qvV" id="Z8K-Ck-Q5y"/>
                         <segue destination="Q2a-DY-tPC" kind="presentation" identifier="completeLogin" id="bpq-qK-DXt"/>
                     </connections>
                 </viewController>
@@ -196,7 +196,7 @@
                             </barButtonItem>
                             <barButtonItem systemItem="refresh" id="5Gk-Hx-Spv">
                                 <connections>
-                                    <action selector="refreshData:" destination="VBW-Xr-Gee" id="nIc-I7-Zpl"/>
+                                    <action selector="reloadContent:" destination="VBW-Xr-Gee" id="nIc-I7-Zpl"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -282,14 +282,14 @@
                             </barButtonItem>
                             <barButtonItem systemItem="refresh" id="nq3-xO-rH4">
                                 <connections>
-                                    <action selector="refreshData:" destination="vlU-tb-htz" id="2aJ-Nh-QFS"/>
+                                    <action selector="updateData:" destination="vlU-tb-htz" id="2aJ-Nh-QFS"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="98J-5b-Lmb" id="hme-9E-Eze"/>
-                        <outlet property="activityView" destination="YXH-iR-bfS" id="1Z3-Rw-0d1"/>
+                        <outlet property="loadingIndicator" destination="YXH-iR-bfS" id="1Z3-Rw-0d1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kUz-gr-5mO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -325,11 +325,11 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="M7m-C1-k9D"/>
                                 </constraints>
-                                <state key="normal" title="Find Location">
+                                <state key="normal" title="Search location">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="findLocation:" destination="ZVl-3O-rLa" eventType="touchUpInside" id="Zlh-sU-Dym"/>
+                                    <action selector="searchPlace:" destination="ZVl-3O-rLa" eventType="touchUpInside" id="Zlh-sU-Dym"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PRE-43-QCZ">
@@ -366,8 +366,8 @@
                     <navigationItem key="navigationItem" id="lD5-Qq-UHc"/>
                     <connections>
                         <outlet property="activityIndicator" destination="29c-xx-g5K" id="I2n-QX-mUn"/>
-                        <outlet property="linkTextField" destination="Du1-PS-fnz" id="LV5-wd-Tn7"/>
-                        <outlet property="locationTextField" destination="PRE-43-QCZ" id="7ZU-ZE-vA2"/>
+                        <outlet property="placeTextField" destination="PRE-43-QCZ" id="7ZU-ZE-vA2"/>
+                        <outlet property="urlTextField" destination="Du1-PS-fnz" id="LV5-wd-Tn7"/>
                         <segue destination="2bi-is-vuX" kind="presentation" identifier="addLocation" id="iew-je-53z"/>
                     </connections>
                 </viewController>
@@ -395,11 +395,11 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="fjp-Zn-FRs"/>
                                 </constraints>
-                                <state key="normal" title="FINISH">
+                                <state key="normal" title="End">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="finish:" destination="2kY-Y2-hvU" eventType="touchUpInside" id="jLL-ao-zFa"/>
+                                    <action selector="end:" destination="2kY-Y2-hvU" eventType="touchUpInside" id="jLL-ao-zFa"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -488,7 +488,7 @@
         <image name="icon_world" width="52" height="67"/>
         <image name="logo-u" width="62" height="62"/>
         <namedColor name="FundoBG">
-            <color red="0.8901960784313725" green="0.80392156862745101" blue="0.73333333333333328" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.88999998569488525" green="0.80400002002716064" blue="0.73299998044967651" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -9,17 +9,15 @@ import UIKit
 
 class PositionTableViewController: UITableViewController {
     
-    // MARK: - Outlets
+  
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var activityView: UIView!
+    @IBOutlet weak var loadingIndicator: UIView!
     
-    // MARK: - Properties
-    var locations = [StudentLocation]()
-    
-    // MARK: - View Life Cycle
+    var map = [LearnerLocation]()
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchStudentLocations()
+        fetchLearnerLocations()
     }
     
     override func viewDidLoad() {
@@ -27,38 +25,44 @@ class PositionTableViewController: UITableViewController {
         setupUI()
     }
     
-    @IBAction func refreshData(_ sender: Any) {
-        refreshUI(true)
-        fetchStudentLocations()
+    @IBAction func updateData(_ sender: Any) {
+        updateUIAfter(true)
+        fetchLearnerLocations()
     }
     
-    private func fetchStudentLocations() {
-        APITheMapClient.getStudentLocations { [weak self] locations, error in
+    private func fetchLearnerLocations() {
+        TheMapAPIClient.performGETRequest(url: TheMapAPIClient.Endpoints.fetchLearnerLocations.url, responseType: LearnerLocationsResponse.self) { [weak self] (response, error) in
             guard let self = self else { return }
+            
             if let error = error {
                 self.showFailure(message: error.localizedDescription)
+            } else if let response = response {
+                self.map = response.results 
+                self.upTableView()
             } else {
-                self.locations = locations
-                self.refreshTableView()
+                
+                self.showFailure(message: "Unknown error")
             }
-            self.refreshUI(false)
+            
+            self.updateUIAfter(false)
         }
     }
+
     
     private func setupUI() {
-        activityView.isHidden = true
+        loadingIndicator.isHidden = true
     }
     
-    private func refreshUI(_ refreshing: Bool) {
+    private func updateUIAfter(_ refreshing: Bool) {
         if refreshing {
             activityIndicator.startAnimating()
         } else {
             activityIndicator.stopAnimating()
         }
-        activityView.isHidden = !refreshing
+        loadingIndicator.isHidden = !refreshing
     }
     
-    private func refreshTableView() {
+    private func upTableView() {
         UIView.transition(with: tableView, duration: 0.3, options: .transitionCrossDissolve, animations: {
             self.tableView.reloadData()
         }, completion: nil)
@@ -69,24 +73,24 @@ class PositionTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.count
+        return map.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let location = locations[indexPath.row]
+        let location = map[indexPath.row]
         
-        cell.textLabel?.text = "\(location.firstName ?? "") \(location.lastName ?? "")"
-        cell.detailTextLabel?.text = location.mediaURL
+        cell.textLabel?.text = "\(location.giventName ?? "") \(location.familyName ?? "")"
+        cell.detailTextLabel?.text = location.urlMedia
         cell.imageView?.image = UIImage(named: "icon_pin")
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedLocation = locations[indexPath.row]
+        let selectedLocation = map[indexPath.row]
         
-        guard let mediaURLString = selectedLocation.mediaURL, let url = URL(string: mediaURLString) else {
+        guard let mediaURLString = selectedLocation.urlMedia, let url = URL(string: mediaURLString) else {
             return
         }
         

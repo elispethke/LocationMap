@@ -9,21 +9,21 @@ import Foundation
 
 struct UserAccountResponse: Codable {
     
-    let lastName: String?
-    let firstName: String?
+    let familyName: String?
+    let givenName: String?
     let userId: String?
 
     enum CodingKeys: String, CodingKey {
-        case lastName = "user_last_name"
-        case firstName = "user_first_name"
+        case familyName = "user_last_name"
+        case givenName = "user_first_name"
         case userId = "user_id"
     }
 
  
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(lastName, forKey: .lastName)
-        try container.encode(firstName, forKey: .firstName)
+        try container.encode(familyName, forKey: .familyName)
+        try container.encode(givenName, forKey: .givenName)
         try container.encode(userId, forKey: .userId)
     }
 }

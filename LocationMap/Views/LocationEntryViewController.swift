@@ -11,15 +11,15 @@ import UIKit
 import MapKit
 
 struct LocationData {
-    var location: String
-    var link: String
+    var place: String
+    var customUrl: String
     var coordinate: CLLocationCoordinate2D
 }
 
 class LocationEntryViewController: UIViewController {
     
-    @IBOutlet weak var locationTextField: UITextField!
-    @IBOutlet weak var linkTextField: UITextField!
+    @IBOutlet weak var placeTextField: UITextField!
+    @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var locationData: LocationData?
@@ -30,26 +30,26 @@ class LocationEntryViewController: UIViewController {
         fetchUserData()
     }
     
-    @IBAction func findLocation(_ sender: Any) {
-        guard let address = locationTextField.text, !address.isEmpty else {
+    @IBAction func searchPlace(_ sender: Any) {
+        guard let address = placeTextField.text, !address.isEmpty else {
             displayError(message: "Location field cannot be empty.")
             return
         }
         
-        guard let link = linkTextField.text, !link.isEmpty else {
+        guard let link = urlTextField.text, !link.isEmpty else {
             displayError(message: "Link field cannot be empty.")
             return
         }
         
-        refreshUI(isRefreshing: true)
-        getCoordinate(addressString: address) { [weak self] coordinate, error in
+        updateUIAfter(isRefreshing: true)
+        fetchPosition(addressString: address) { [weak self] coordinate, error in
             guard let self = self else { return }
-            self.refreshUI(isRefreshing: false)
+            self.updateUIAfter(isRefreshing: false)
             
             if let error = error {
                 self.displayError(message: error.localizedDescription)
             } else {
-                let locationData = LocationData(location: address, link: link, coordinate: coordinate)
+                let locationData = LocationData(place: address, customUrl: link, coordinate: coordinate)
                 self.locationData = locationData
                 self.performSegue(withIdentifier: "addLocation", sender: self)
             }
@@ -69,7 +69,7 @@ class LocationEntryViewController: UIViewController {
         print("Fetching user data...")
     }
     
-    private func getCoordinate(addressString: String, completionHandler: @escaping (CLLocationCoordinate2D, Error?) -> Void) {
+    private func fetchPosition(addressString: String, completionHandler: @escaping (CLLocationCoordinate2D, Error?) -> Void) {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(addressString) { placemarks, error in
             if let error = error {
@@ -99,7 +99,7 @@ class LocationEntryViewController: UIViewController {
         present(alertVC, animated: true)
     }
     
-    private func refreshUI(isRefreshing: Bool) {
+    private func updateUIAfter(isRefreshing: Bool) {
         if isRefreshing {
             activityIndicator.startAnimating()
         } else {

@@ -9,12 +9,12 @@ import UIKit
 
 protocol LoginHandling: AnyObject {
     func login(username: String, password: String)
-    func showLoginFailure(message: String)
+    func presentLoginError(message: String)
 }
 
 class SignInViewController: UIViewController, LoginHandling {
     
-    @IBOutlet weak var usernameTextField: LoginTextField!
+    @IBOutlet weak var emailTextField: LoginTextField!
     @IBOutlet weak var passwordTextField: LoginTextField!
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,35 +28,35 @@ class SignInViewController: UIViewController, LoginHandling {
     }
     
     @IBAction func loginTapped(_ sender: Any) {
-        guard let username = usernameTextField.text, let password = passwordTextField.text else {
-            showLoginFailure(message: "Username or Password cannot be empty.")
+        guard let username = emailTextField.text, let password = passwordTextField.text else {
+            presentLoginError(message: "Username and Password cannot be empty.")
             return
         }
         login(username: username, password: password)
     }
     
     @IBAction func signUp(_ sender: Any) {
-        UIApplication.shared.open(APITheMapClient.Endpoints.signUp.url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(TheMapAPIClient.Endpoints.register.url, options: [:], completionHandler: nil)
     }
     
     func login(username: String, password: String) {
-        APITheMapClient.createSessionId(username: username, password: password) { [weak self] success, error in
+        TheMapAPIClient.createSession(username: username, password: password) { [weak self] success, error in
             guard let self = self else { return }
             if success {
                 print("successfully logged in")
-                print(Auth.sessionId)
+                print(UserSession.sessionId)
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "completeLogin", sender: nil)
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.showLoginFailure(message: error?.localizedDescription ?? "Unknown error occurred.")
+                    self.presentLoginError(message: error?.localizedDescription ?? "error occurred.")
                 }
             }
         }
     }
     
-    func showLoginFailure(message: String) {
+    func presentLoginError(message: String) {
         DispatchQueue.main.async {
             let alertVC = UIAlertController(title: "Login Failed", message: message, preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -65,12 +65,12 @@ class SignInViewController: UIViewController, LoginHandling {
     }
     
     private func resetTextFields() {
-        usernameTextField.text = ""
+        emailTextField.text = ""
         passwordTextField.text = ""
     }
     
     private func setupPlaceholderTexts() {
-        usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        emailTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
     }
 }

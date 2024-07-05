@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Auth {
+struct UserSession {
     static var sessionId = ""
-    static var objectId = ""
+    static var customIdentifier = ""
     static var uniqueKey = ""
-    static var firstName = ""
-    static var lastName = ""
+    static var givenName = ""
+    static var familyName = ""
 }
 

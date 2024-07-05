@@ -8,16 +8,31 @@
 import Foundation
 
 struct PlaceStudentRequest: Codable{
-    let uniqueKey: String
-    let firstName: String
-    let lastName: String
-    let mapString: String
-    let mediaURL: String
-    let latitude: Double
-    let longitude: Double
+    let uniqueIdentifier: String
+    let givenName: String
+    let familyName: String
+    let locationString: String
+    let urlMedia: String
+    let lat: Double
+    let lon: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case uniqueIdentifier = "uniqueKey"
+        case givenName = "giventName"
+        case familyName = "familyName"
+        case locationString = "locationString"
+        case urlMedia = "urlMedia"
+        case lat = "latitude"
+        case lon = "longitude"
+    }
 }
 
-struct StudentPostLocationResponse: Codable {
-    let objectId: String
-    let createdAt: String
+struct UserPostLocationResponse: Codable {
+    let customIdentifier: String
+    let createdDateString: String
+    
+    enum CodingKeys: String, CodingKey {
+        case customIdentifier = "customIdentifier"
+        case createdDateString = "createdDateString"
+    }
 }
