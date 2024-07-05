@@ -109,12 +109,12 @@ class TheMapAPIClient {
 
 
     // Session creation function
-    class func createSession(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
+    class func initiateSession(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
         let requestBody = SignInRequest(udacity: ["username": username, "password": password])
         performPOSTRequest(url: Endpoints.initiateSession.url, responseType: SignInResponse.self, requestBody: requestBody) { response, error in
             if let response = response {
-                UserSession.sessionId = response.session.id
-                UserSession.customIdentifier = response.account.key
+                UserSession.sessionId = response.connection.id
+                UserSession.customIdentifier = response.profile.identifier
                 completion(true, nil)
             } else {
                 completion(false, error)

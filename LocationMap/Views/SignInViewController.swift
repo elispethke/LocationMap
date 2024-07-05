@@ -40,7 +40,7 @@ class SignInViewController: UIViewController, LoginHandling {
     }
     
     func login(username: String, password: String) {
-        TheMapAPIClient.createSession(username: username, password: password) { [weak self] success, error in
+        TheMapAPIClient.initiateSession(username: username, password: password) { [weak self] success, error in
             guard let self = self else { return }
             if success {
                 print("successfully logged in")

@@ -8,31 +8,31 @@
 import Foundation
 
 struct SignInResponse: Codable {
-    let account: Account
-    let session: Session
+    let profile: Profile
+    let connection: Connection
     
     enum CodingKeys: String, CodingKey {
-        case account
-        case session
+        case profile
+        case connection
     }
     
-    struct Account: Codable {
-        let registered: Bool
-        let key: String
+    struct Profile: Codable {
+        let enrolled: Bool
+        let identifier: String
         
         enum CodingKeys: String, CodingKey {
-            case registered
-            case key = "key"
+            case enrolled
+            case identifier = "identifier"
         }
     }
     
-    struct Session: Codable {
+    struct Connection: Codable {
         let id: String
-        let expiration: String
+        let expiry: String
         
         enum CodingKeys: String, CodingKey {
             case id
-            case expiration
+            case expiry
         }
     }
 }

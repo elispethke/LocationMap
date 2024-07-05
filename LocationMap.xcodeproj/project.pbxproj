@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		C2CBE00F2C371AFE00658473 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE00E2C371AFE00658473 /* AppDelegate.swift */; };
 		C2CBE0112C371AFE00658473 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0102C371AFE00658473 /* SceneDelegate.swift */; };
-		C2CBE0132C371AFE00658473 /* UIViewController+Extension in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE0122C371AFE00658473 /* UIViewController+Extension */; };
 		C2CBE0182C371B0000658473 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2CBE0172C371B0000658473 /* Assets.xcassets */; };
 		C2CBE01B2C371B0000658473 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = C2CBE01A2C371B0000658473 /* Base */; };
 		C2CBE0242C371B3900658473 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2CBE0222C371B3900658473 /* Main.storyboard */; };
@@ -37,7 +36,6 @@
 		C2CBE00B2C371AFE00658473 /* LocationMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2CBE00E2C371AFE00658473 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2CBE0102C371AFE00658473 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C2CBE0122C371AFE00658473 /* UIViewController+Extension */ = {isa = PBXFileReference; lastKnownFileType = text; path = "UIViewController+Extension"; sourceTree = "<group>"; };
 		C2CBE0172C371B0000658473 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C2CBE01A2C371B0000658473 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C2CBE01C2C371B0000658473 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,7 +97,6 @@
 				C2CBE0252C373DDC00658473 /* Model */,
 				C2CBE00E2C371AFE00658473 /* AppDelegate.swift */,
 				C2CBE0102C371AFE00658473 /* SceneDelegate.swift */,
-				C2CBE0122C371AFE00658473 /* UIViewController+Extension */,
 				C2CBE0172C371B0000658473 /* Assets.xcassets */,
 				C2CBE0192C371B0000658473 /* LaunchScreen.storyboard */,
 				C2CBE01C2C371B0000658473 /* Info.plist */,
@@ -249,7 +246,6 @@
 				C2CBE0442C3747E500658473 /* UserAccountResponse.swift in Sources */,
 				C2CBE0502C37492D00658473 /* APITheMapClient.swift in Sources */,
 				C2CBE04A2C37485F00658473 /* SignInRequest.swift in Sources */,
-				C2CBE0132C371AFE00658473 /* UIViewController+Extension in Sources */,
 				C2CBE0562C385F8000658473 /* LearnerLocationsResponse.swift in Sources */,
 				C2CBE03A2C3744C400658473 /* LoginButton.swift in Sources */,
 				C2CBE03E2C3745F900658473 /* SignInResponse.swift in Sources */,

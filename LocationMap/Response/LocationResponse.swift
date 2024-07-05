@@ -8,12 +8,13 @@
 import Foundation
 
 struct LocationResponse: Codable {
-    let status: Int
+    let condition: Int
     let error: String
 }
 
 extension LocationResponse: LocalizedError {
-    var errorDescription: String? {
+    var problemDescription: String{
         return error
     }
+    
 }
